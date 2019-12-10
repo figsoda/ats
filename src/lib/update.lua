@@ -136,7 +136,7 @@ M.trainScanner = function(uid, scanner)
                     if sid ~= nil then
                         addSignal(sigs, sigid.currentStation, sid)
                         if (temporary == -1 or temporary == -3) and record.temporary then
-                            addSignal(sigs, sigid.temporary, 1)
+                            addSignal(sigs, sigid.temporary, 2)
                         end
                     end
                 end
@@ -145,7 +145,7 @@ M.trainScanner = function(uid, scanner)
                 if record ~= nil then
                     addSignal(sigs, sigid.currentStation, schedule.current)
                     if (temporary == -2 or temporary == -3) and record.temporary then
-                        addSignal(sigs, sigid.temporary, 1)
+                        addSignal(sigs, sigid.temporary, 2)
                     end
                 end
             end
