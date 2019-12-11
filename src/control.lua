@@ -2,12 +2,33 @@ local update = require("lib.update")
 local util = require("lib.util")
 
 script.on_init(function()
-    global.trains = {}
-    global.trainIds = {}
-    global.trainScanners = {}
-    global.trainSchedulers = {}
-    global.trainStations = {}
-    global.trainStationIds = {}
+    global = {
+        trains = {}, -- Table Uint LuaTrain
+        trainIds = {}, -- Array Uint
+        trainScanners = {}, -- Table Uint { index :: Uint, entity, input, output :: LuaEntity }
+        trainSchedulers = {}, -- Table Uint { id :: Int, entity, input :: LuaEntity }
+        trainStations = {}, -- Table Uint String
+        trainStationIds = {}, -- Table String Uint
+    }
+
+    for _, surface in pairs(game.surfaces) do
+        local trains = surface.get_trains()
+        for i = 1, #trains do
+            local train = trains[i]
+            table.insert(global.trainIds, train.id)
+            global.trains[train.id] = train
+        end
+
+        local stops = surface.find_entities_filtered({ name = "train-stop" })
+        for i = 1, #stops do
+            local stop = stops[i]
+            if global.trainStationIds[stop.backer_name] == nil then
+                local sid = #global.trainStations + 1
+                global.trainStationIds[stop.backer_name] = sid
+                global.trainStations[sid] = stop.backer_name
+            end
+        end
+    end
 end)
 
 script.on_event(defines.events.on_train_created, function(event)
@@ -54,6 +75,7 @@ script.on_event({
         input.operable = false
 
         global.trainSchedulers[entity.unit_number] = {
+            id = 0,
             entity = entity,
             input = input,
         }
@@ -101,7 +123,7 @@ script.on_event("show-train-stations", function(event)
     if player.gui.center["train-stations-frame"] == nil then
         local gui = player.gui.center.add(util.proto.frame {
             name = "train-stations-frame",
-            caption = { "caption.train-stations" },
+            caption = { "captions.train-stations" },
             direction = "vertical",
         }).add(util.proto.scrollPane {
             name = "train-stations-scroll-pane",
