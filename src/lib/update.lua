@@ -188,7 +188,7 @@ M.trainScheduler = function(uid, scheduler)
             local schedule = train.schedule or { current = 1, records = {} }
             local record = { station = station.name, wait_conditions = {} }
 
-            if input.get_merged_signal(sigid.temporary) > 0 then
+            if input.get_merged_signal(sigid.temporary) ~= 0 then
                 record.temporary = true
             end
 
