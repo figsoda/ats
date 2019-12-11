@@ -2,22 +2,22 @@ local update = require("lib.update")
 local util = require("lib.util")
 
 local addTrainStop = function(stop)
-    local station = stop.backer_name
-    local sid = global.trainStationIds[station]
+    local name = stop.backer_name
+    local sid = global.trainStationIds[name]
     if sid == nil then
         sid = #global.trainStations + 1
         global.trainStations[sid] = {
-            station = station,
+            name = name,
             stops = { [stop.unit_number] = stop },
         }
-        global.trainStationIds[station] = sid
+        global.trainStationIds[name] = sid
     else
         global.trainStations[sid].stops[stop.unit_number] = stop
     end
 end
 
-local removeTrainStop = function(station, uid)
-    local sid = global.trainStationIds[station]
+local removeTrainStop = function(name, uid)
+    local sid = global.trainStationIds[name]
     if sid ~= nil then
         global.trainStations[sid].stops[uid] = nil
     end
@@ -39,7 +39,7 @@ script.on_init(function()
         trainIds = {}, -- Array Uint
         trainScanners = {}, -- Table Uint { index :: Uint, entity, input, output :: LuaEntity }
         trainSchedulers = {}, -- Table Uint { id :: Int, entity, input :: LuaEntity }
-        trainStations = {}, -- Table Uint { station :: String, stops :: Table Uint LuaEntity }
+        trainStations = {}, -- Table Uint { name :: String, stops :: Table Uint LuaEntity }
         trainStationIds = {}, -- Table String Uint
     }
 
@@ -157,7 +157,7 @@ script.on_event("show-train-stations", function(event)
         for sid, station in pairs(global.trainStations) do
             local name = util.any(station.stops, function(_, stop)
                 return not stop.get_or_create_control_behavior().disabled
-            end) and station.station or "*** " .. station.station
+            end) and station.name or "*** " .. station.name
 
             gui.add(util.proto.label {
                 name = string.format("station-id-%d", sid),
