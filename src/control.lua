@@ -156,15 +156,15 @@ script.on_event("show-train-stations", function(event)
 
         for sid, station in pairs(global.trainStations) do
             local name = util.any(station.stops, function(_, stop)
-                return not stop.get_control_behavior().disabled
-            end) and station.station or "*" .. station.station
+                return not stop.get_or_create_control_behavior().disabled
+            end) and station.station or "*** " .. station.station
 
             gui.add(util.proto.label {
-                name = sid,
+                name = string.format("station-id-%d", sid),
                 caption = sid,
             })
             gui.add(util.proto.label {
-                name = name,
+                name = string.format("station-name-%d", sid),
                 caption = name,
             })
         end
