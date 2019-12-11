@@ -38,7 +38,7 @@ script.on_init(function()
         trains = {}, -- Table Uint LuaTrain
         trainIds = {}, -- Array Uint
         trainScanners = {}, -- Table Uint { index :: Uint, entity, input, output :: LuaEntity }
-        trainSchedulers = {}, -- Table Uint { entity, input :: LuaEntity }
+        trainSchedulers = {}, -- Table Uint { id :: Int, entity, input :: LuaEntity }
         trainStations = {}, -- Table Uint { name :: String, stops :: Table Uint LuaEntity }
         trainStationIds = {}, -- Table String Uint
     }
@@ -102,6 +102,7 @@ script.on_event({
         input.operable = false
 
         global.trainSchedulers[entity.unit_number] = {
+            id = 0,
             entity = entity,
             input = input,
         }

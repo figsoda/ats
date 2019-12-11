@@ -11,6 +11,6 @@ data:extend({
         name = "ats-update-interval",
         setting_type = "runtime-global",
         minimum_value = 1,
-        default_value = 1,
+        default_value = 4,
     },
 })
