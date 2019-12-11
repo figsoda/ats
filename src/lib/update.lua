@@ -20,7 +20,7 @@ M.trainScanner = function(uid, scanner)
         global.trainScanners[uid] = nil
         return
     end
-    local output = scanner.output.get_control_behavior()
+    local output = scanner.output.get_or_create_control_behavior()
 
     if scanner.entity.energy < 20000 then
         output.parameters = nil
