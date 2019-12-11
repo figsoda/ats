@@ -2,6 +2,7 @@ local M = {}
 
 local util = require("lib.util")
 
+M.id = util.proto.virtual { name = "signal-I" }
 M.pass = util.proto.virtual { name = "signal-P" }
 M.train = util.proto.virtual { name = "signal-T" }
 M.locomotive = util.proto.virtual { name = "signal-locomotive" }
