@@ -165,10 +165,6 @@ M.trainScheduler = function(uid, scheduler)
 
     if scheduler.entity.energy < 12000 then return end
 
-    local last = scheduler.id
-    scheduler.id = input.get_merged_signal(sigid.id)
-    if last ~= 0 and last ~= scheduler.id then return end
-
     local tid = input.get_merged_signal(sigid.train)
     if tid <= 0 then return end
 
