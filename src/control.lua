@@ -12,7 +12,7 @@ local addTrainStop = function(stop)
         }
         global.trainStationIds[station] = sid
     else
-        global.trainStation[sid].stops[stop.unit_number] = stop
+        global.trainStations[sid].stops[stop.unit_number] = stop
     end
 end
 
