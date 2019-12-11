@@ -186,7 +186,7 @@ M.trainScheduler = function(uid, scheduler)
         local station = global.trainStations[input.get_merged_signal(sigid.trainStation)]
         if station ~= nil then
             local schedule = train.schedule or { current = 1, records = {} }
-            local record = { station = station.station, wait_conditions = {} }
+            local record = { station = station.name, wait_conditions = {} }
 
             if input.get_merged_signal(sigid.temporary) > 0 then
                 record.temporary = true
@@ -243,16 +243,17 @@ M.trainScheduler = function(uid, scheduler)
                 }
             end
 
-            if addStation <= schedule.current then
-                schedule.current = schedule.current + 1
-            end
-
             len = len + 1
             if addStation == -1 then
-                schedule.records[len + 1] = record
+                schedule.records[len] = record
             else
                 table.insert(schedule.records, addStation, record)
+                if addStation <= schedule.current then
+                    schedule.current = schedule.current + 1
+                end
             end
+
+            if schedule.current > len then schedule.current = len end
 
             train.schedule = schedule
         end
