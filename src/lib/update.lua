@@ -186,7 +186,7 @@ M.trainScheduler = function(uid, scheduler)
         local station = global.trainStations[input.get_merged_signal(sigid.trainStation)]
         if station ~= nil then
             local schedule = train.schedule or { current = 1, records = {} }
-            local record = { station = station, wait_conditions = {} }
+            local record = { station = station.station, wait_conditions = {} }
 
             if input.get_merged_signal(sigid.temporary) > 0 then
                 record.temporary = true
@@ -261,16 +261,6 @@ M.trainScheduler = function(uid, scheduler)
     local goToStation = input.get_merged_signal(sigid.goToStation)
     if goToStation > 0 and goToStation <= len then
         train.go_to_station(goToStation)
-    end
-end
-
-M.all = function()
-    for uid, scanner in pairs(global.trainScanners) do
-        M.trainScanner(uid, scanner)
-    end
-
-    for uid, scheduler in pairs(global.trainSchedulers) do
-        M.trainScheduler(uid, scheduler)
     end
 end
 

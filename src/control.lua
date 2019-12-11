@@ -1,13 +1,45 @@
 local update = require("lib.update")
 local util = require("lib.util")
 
+local addTrainStop = function(stop)
+    local station = stop.backer_name
+    local sid = global.trainStationIds[station]
+    if sid == nil then
+        sid = #global.trainStations + 1
+        global.trainStations[sid] = {
+            station = station,
+            stops = { [stop.unit_number] = stop },
+        }
+        global.trainStationIds[station] = sid
+    else
+        global.trainStation[sid].stops[stop.unit_number] = stop
+    end
+end
+
+local removeTrainStop = function(station, uid)
+    local sid = global.trainStationIds[station]
+    if sid ~= nil then
+        global.trainStations[sid].stops[uid] = nil
+    end
+end
+
+local updateAll = function()
+    for uid, scanner in pairs(global.trainScanners) do
+        update.trainScanner(uid, scanner)
+    end
+
+    for uid, scheduler in pairs(global.trainSchedulers) do
+        update.trainScheduler(uid, scheduler)
+    end
+end
+
 script.on_init(function()
     global = {
         trains = {}, -- Table Uint LuaTrain
         trainIds = {}, -- Array Uint
         trainScanners = {}, -- Table Uint { index :: Uint, entity, input, output :: LuaEntity }
         trainSchedulers = {}, -- Table Uint { id :: Int, entity, input :: LuaEntity }
-        trainStations = {}, -- Table Uint String
+        trainStations = {}, -- Table Uint { station :: String, stops :: Table Uint LuaEntity }
         trainStationIds = {}, -- Table String Uint
     }
 
@@ -21,12 +53,7 @@ script.on_init(function()
 
         local stops = surface.find_entities_filtered({ name = "train-stop" })
         for i = 1, #stops do
-            local stop = stops[i]
-            if global.trainStationIds[stop.backer_name] == nil then
-                local sid = #global.trainStations + 1
-                global.trainStationIds[stop.backer_name] = sid
-                global.trainStations[sid] = stop.backer_name
-            end
+            addTrainStop(stops[i])
         end
     end
 end)
@@ -80,22 +107,15 @@ script.on_event({
             input = input,
         }
     elseif entity.name == "train-stop" then
-        if global.trainStationIds[entity.backer_name] == nil then
-            local sid = #global.trainStations + 1
-            global.trainStationIds[entity.backer_name] = sid
-            global.trainStations[sid] = entity.backer_name
-        end
+        addTrainStop(entity)
     end
 end)
 
 script.on_event(defines.events.on_entity_renamed, function(event)
     local entity = event.entity
     if entity.name == "train-stop" then
-        if global.trainStationIds[entity.backer_name] == nil then
-            local sid = #global.trainStations + 1
-            global.trainStationIds[entity.backer_name] = sid
-            global.trainStations[sid] = entity.backer_name
-        end
+        removeTrainStop(event.old_name, entity.unit_number)
+        addTrainStop(entity)
     end
 end)
 
@@ -115,13 +135,15 @@ script.on_event({
         local scheduler = global.trainSchedulers[entity.unit_number]
         util.destroyEntity(scheduler.input)
         global.trainSchedulers[entity.unit_number] = nil
+    elseif entity.name == "train-stop" then
+        removeTrainStop(entity.backer_name, entity.unit_number)
     end
 end)
 
 script.on_event("show-train-stations", function(event)
-    local player = game.get_player(event.player_index)
-    if player.gui.center["train-stations-frame"] == nil then
-        local gui = player.gui.center.add(util.proto.frame {
+    local center = game.get_player(event.player_index).gui.center
+    if center["train-stations-frame"] == nil then
+        local gui = center.add(util.proto.frame {
             name = "train-stations-frame",
             caption = { "captions.train-stations" },
             direction = "vertical",
@@ -132,7 +154,11 @@ script.on_event("show-train-stations", function(event)
             column_count = 2,
         })
 
-        for sid, name in pairs(global.trainStations) do
+        for sid, station in pairs(global.trainStations) do
+            local name = util.any(station.stops, function(_, stop)
+                return not stop.get_control_behavior().disabled
+            end) and station.station or "*" .. station.station
+
             gui.add(util.proto.label {
                 name = sid,
                 caption = sid,
@@ -143,16 +169,16 @@ script.on_event("show-train-stations", function(event)
             })
         end
     else
-        player.gui.center["train-stations-frame"].destroy()
+        center["train-stations-frame"].destroy()
     end
 end)
 
-script.on_nth_tick(settings.global["ats-update-interval"].value, update.all)
+script.on_nth_tick(settings.global["ats-update-interval"].value, updateAll)
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
     if event.setting == "ats-update-interval" then
         script.on_nth_tick(nil)
-        script.on_nth_tick(settings.global["ats-update-interval"].value, update.all)
+        script.on_nth_tick(settings.global["ats-update-interval"].value, updateAll)
     end
 end)
 

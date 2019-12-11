@@ -54,6 +54,16 @@ M.filter = function(xs, f)
     end
 end
 
+M.any = function(mx, f)
+    for k, v in pairs(mx) do
+        if f(k, v) then
+            return true
+        end
+    end
+
+    return false
+end
+
 M.fields = function(mx, xs)
     local my = {}
 
