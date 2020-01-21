@@ -4,7 +4,7 @@ local util = require("lib.util")
 
 M.locomotive = util.proto.virtualSignal {
     name = "signal-locomotive",
-    icons = util.iconWithColor("blue", "__base__/graphics/icons/diesel-locomotive.png"),
+    icons = util.iconWithColor("blue", "__base__/graphics/icons/locomotive.png"),
     subgroup = "virtual-signal-rolling-stock",
     order = "f[rolling-stock]-a[locomotive]",
 }
@@ -28,12 +28,12 @@ M.addStation = util.proto.virtualSignal {
     icons = {
         {
             icon = "__base__/graphics/icons/signal/signal_green.png",
-            icon_size = 32,
+            icon_size = 64,
         },
         {
             icon = "__base__/graphics/icons/train-stop.png",
-            icon_size = 32,
-            scale = 0.75,
+            icon_size = 64,
+            scale = 0.375,
             shift = { -6, 0 },
         },
         {
@@ -52,12 +52,12 @@ M.goToStation = util.proto.virtualSignal {
     icons = {
         {
             icon = "__base__/graphics/icons/signal/signal_green.png",
-            icon_size = 32,
+            icon_size = 64,
         },
         {
             icon = "__base__/graphics/icons/train-stop.png",
-            icon_size = 32,
-            scale = 0.75,
+            icon_size = 64,
+            scale = 0.375,
             shift = { -6, 0 },
         },
         {
@@ -76,12 +76,12 @@ M.trainStation = util.proto.virtualSignal {
     icons = {
         {
             icon = "__base__/graphics/icons/signal/signal_yellow.png",
-            icon_size = 32,
+            icon_size = 64,
         },
         {
             icon = "__base__/graphics/icons/train-stop.png",
-            icon_size = 32,
-            scale = 0.75,
+            icon_size = 64,
+            scale = 0.375,
             shift = { -6, 0 },
         },
         {
@@ -100,18 +100,18 @@ M.currentStation = util.proto.virtualSignal {
     icons = {
         {
             icon = "__base__/graphics/icons/signal/signal_yellow.png",
-            icon_size = 32,
+            icon_size = 64,
         },
         {
             icon = "__base__/graphics/icons/train-stop.png",
-            icon_size = 32,
-            scale = 0.75,
+            icon_size = 64,
+            scale = 0.375,
             shift = { -6, 0 },
         },
         {
-            icon = "__core__/graphics/editor-play-icon.png",
-            icon_size = 64,
-            scale = 0.1875,
+            icon = "__core__/graphics/icons/mip/play.png",
+            icon_size = 32,
+            scale = 0.375,
             shift = { 6, -6 },
         },
     },
@@ -121,28 +121,28 @@ M.currentStation = util.proto.virtualSignal {
 
 M.temporary = util.proto.virtualSignal {
     name = "signal-temporary",
-    icons = util.iconWithColor("yellow", "__core__/graphics/time-editor-icon.png"),
+    icons = util.iconWithColor("yellow", "__core__/graphics/time-editor-icon.png", 32, 0.75),
     subgroup = "virtual-signal-train-schedule",
     order = "g[train-schedule]-e[temporary]",
 }
 
 M.compareType = util.proto.virtualSignal {
     name = "signal-compare-type",
-    icons = util.iconWithColor("pink", "__core__/graphics/and-or-icon.png", 64, 0.375),
+    icons = util.iconWithColor("pink", "__core__/graphics/and-or-icon.png"),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-a[compare-type]",
 }
 
 M.timePassed = util.proto.virtualSignal {
     name = "signal-time-passed",
-    icons = util.iconWithColor("red", "__core__/graphics/clock-icon.png"),
+    icons = util.iconWithColor("red", "__core__/graphics/clock-icon.png", 32, 0.75),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-b[time-passed]",
 }
 
 M.inactivity = util.proto.virtualSignal {
     name = "signal-inactivity",
-    icons = util.iconWithColor("red", "__core__/graphics/multiplayer-waiting-icon.png"),
+    icons = util.iconWithColor("red", "__core__/graphics/multiplayer-waiting-icon.png", 32, 0.75),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-c[inactivity]",
 }
@@ -163,7 +163,7 @@ M.circuitCondition = util.proto.virtualSignal {
 
 M.passenger = util.proto.virtualSignal {
     name = "signal-passenger",
-    icons = util.iconWithColor("red", "__core__/graphics/show-player-names-in-map-view.png"),
+    icons = util.iconWithColor("red", "__core__/graphics/show-player-names-in-map-view.png", 32, 0.75),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-f[passenger]",
 }
