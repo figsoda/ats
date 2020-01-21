@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.0
-Data: 2020-01-21
+Date: 2020-01-21
   Major Features:
     - Compatibilities with Factorio version 0.18
   Locale:
