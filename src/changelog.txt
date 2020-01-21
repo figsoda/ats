@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Data: 2020-01-21
+  Major Features:
+    - Compatibilities with Factorio version 0.18
+  Locale:
+    - Added missing technology translations
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2019-12-11
+  Major Features:
+    - Train Scanner
+    - Train Scheduler
+  Info:
+    - Initial Release
+  Locale:
+    - English
+    - Simplified Chinese
