@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 2020-08-20
+  Major Features:
+    - Compatibilities with Factorio version 1.0
+    - New graphics
+  Locale:
+    - Added missing signal translations
+
+---------------------------------------------------------------------------------------------------
 Version: 0.2.0
 Date: 2020-01-21
   Major Features:
