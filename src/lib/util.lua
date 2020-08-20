@@ -28,7 +28,6 @@ M.iconWithColor = function(color, icon, size, scale)
         {
             icon = "__base__/graphics/icons/signal/signal_" .. color .. ".png",
             icon_size = 64,
-            --scale = 0.5,
         },
         {
             icon = icon,

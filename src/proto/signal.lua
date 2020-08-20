@@ -33,14 +33,14 @@ M.addStation = util.proto.virtualSignal {
         {
             icon = "__base__/graphics/icons/train-stop.png",
             icon_size = 64,
-            scale = 0.375,
-            shift = { -6, 0 },
+            scale = 0.32,
+            shift = { -2, 1 },
         },
         {
             icon = "__core__/graphics/add-icon.png",
             icon_size = 32,
             scale = 0.375,
-            shift = { 6, -6 },
+            shift = { 8, -8 },
         },
     },
     subgroup = "virtual-signal-train-schedule",
@@ -57,14 +57,14 @@ M.goToStation = util.proto.virtualSignal {
         {
             icon = "__base__/graphics/icons/train-stop.png",
             icon_size = 64,
-            scale = 0.375,
-            shift = { -6, 0 },
+            scale = 0.32,
+            shift = { -2, 1 },
         },
         {
             icon = "__core__/graphics/goto-icon.png",
             icon_size = 32,
             scale = 0.375,
-            shift = { 6, -6 },
+            shift = { 8, -8 },
         },
     },
     subgroup = "virtual-signal-train-schedule",
@@ -81,14 +81,14 @@ M.trainStation = util.proto.virtualSignal {
         {
             icon = "__base__/graphics/icons/train-stop.png",
             icon_size = 64,
-            scale = 0.375,
-            shift = { -6, 0 },
+            scale = 0.32,
+            shift = { -2, 1 },
         },
         {
             icon = "__core__/graphics/train-stop-in-map-view.png",
             icon_size = 32,
             scale = 0.25,
-            shift = { 6, -6 },
+            shift = { 8, -8 },
         },
     },
     subgroup = "virtual-signal-train-schedule",
@@ -105,14 +105,14 @@ M.currentStation = util.proto.virtualSignal {
         {
             icon = "__base__/graphics/icons/train-stop.png",
             icon_size = 64,
-            scale = 0.375,
-            shift = { -6, 0 },
+            scale = 0.32,
+            shift = { -2, 1 },
         },
         {
             icon = "__core__/graphics/icons/mip/play.png",
             icon_size = 32,
             scale = 0.375,
-            shift = { 6, -6 },
+            shift = { 8, -8 },
         },
     },
     subgroup = "virtual-signal-train-schedule",
@@ -163,7 +163,7 @@ M.circuitCondition = util.proto.virtualSignal {
 
 M.passenger = util.proto.virtualSignal {
     name = "signal-passenger",
-    icons = util.iconWithColor("red", "__core__/graphics/show-player-names-in-map-view.png", 32, 0.75),
+    icons = util.iconWithColor("red", "__ats__/graphics/icons/passenger.png", 64, 0.5),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-f[passenger]",
 }
