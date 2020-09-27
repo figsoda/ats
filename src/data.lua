@@ -60,8 +60,8 @@ if mods["Squeak Through"] ~= nil then
     for i = 1, #exclude do
         local proto = exclude[i]
         table.insert(exclusions, {
-            apply_when_object_exists = util.fields(proto, { "type", "name" }),
-            excluded_prototype_names = { proto.name },
+            apply_when_object_exists = util.fields(proto, {"type", "name"}),
+            excluded_prototype_names = {proto.name},
         })
     end
 end

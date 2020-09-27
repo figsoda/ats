@@ -2,69 +2,71 @@ local M = {}
 
 local util = require("lib.util")
 
-M.signalInput = util.merge(data.raw["constant-combinator"]["constant-combinator"], {
-    name = "signal-input",
-    flags = {
-        "placeable-off-grid",
-        "player-creation",
-        "not-repairable",
-        "not-on-map",
-        "not-deconstructable",
-        "hidden",
-        "hide-alt-info",
-        "not-flammable",
-        "not-upgradable",
-    },
-    max_health = 10000,
-    healing_per_tick = 10000,
-    collision_mask = { "layer-12" },
-    allow_copy_paste = false,
-    item_slot_count = 0,
-    circuit_wire_max_distance = 10,
-})
+M.signalInput = util.merge(
+    data.raw["constant-combinator"]["constant-combinator"], {
+        name = "signal-input",
+        flags = {
+            "placeable-off-grid",
+            "player-creation",
+            "not-repairable",
+            "not-on-map",
+            "not-deconstructable",
+            "hidden",
+            "hide-alt-info",
+            "not-flammable",
+            "not-upgradable",
+        },
+        max_health = 10000,
+        healing_per_tick = 10000,
+        collision_mask = {"layer-12"},
+        allow_copy_paste = false,
+        item_slot_count = 0,
+        circuit_wire_max_distance = 10,
+    })
 M.signalInput.minable = nil
 
-M.signalOutput = util.merge(data.raw["constant-combinator"]["constant-combinator"], {
-    name = "signal-output",
-    flags = {
-        "placeable-off-grid",
-        "player-creation",
-        "not-repairable",
-        "not-on-map",
-        "not-deconstructable",
-        "hidden",
-        "hide-alt-info",
-        "not-flammable",
-        "not-upgradable",
-    },
-    max_health = 10000,
-    healing_per_tick = 10000,
-    collision_mask = { "layer-12" },
-    allow_copy_paste = false,
-    item_slot_count = settings.startup["ats-signal-maximum"].value,
-    circuit_wire_max_distance = 10,
-})
+M.signalOutput = util.merge(
+    data.raw["constant-combinator"]["constant-combinator"], {
+        name = "signal-output",
+        flags = {
+            "placeable-off-grid",
+            "player-creation",
+            "not-repairable",
+            "not-on-map",
+            "not-deconstructable",
+            "hidden",
+            "hide-alt-info",
+            "not-flammable",
+            "not-upgradable",
+        },
+        max_health = 10000,
+        healing_per_tick = 10000,
+        collision_mask = {"layer-12"},
+        allow_copy_paste = false,
+        item_slot_count = settings.startup["ats-signal-maximum"].value,
+        circuit_wire_max_distance = 10,
+    })
 M.signalOutput.minable = nil
 
 M.trainScanner = util.proto.beacon {
     name = "train-scanner",
     icon = "__base__/graphics/icons/radar.png",
     icon_size = 32,
-    flags = { "not-rotatable", "placeable-player", "player-creation" },
-    minable = { mining_time = 0.2, result = "train-scanner" },
+    flags = {"not-rotatable", "placeable-player", "player-creation"},
+    minable = {mining_time = 0.2, result = "train-scanner"},
     max_health = 400,
     corpse = "radar-remnants",
     dying_explosion = "medium-explosion",
     resistances = {
-        util.proto.fire { percent = 70 },
-        util.proto.impact { percent = 30 },
+        util.proto.fire {percent = 70},
+        util.proto.impact {percent = 30},
     },
-    collision_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
-    selection_box = { { -2, -2 }, { 2, 2 } },
+    collision_box = {{-1.5, -1.5}, {1.5, 1.5}},
+    selection_box = {{-2, -2}, {2, 2}},
     tile_width = 4,
     tile_height = 4,
     selection_priority = 45,
-    vehicle_impact_sound =  {
+    vehicle_impact_sound = {
         filename = "__base__/sound/car-metal-impact.ogg",
         volume = 0.65,
     },
@@ -87,7 +89,7 @@ M.trainScanner = util.proto.beacon {
             height = 254,
             shift = util.pixels(1, -16),
             scale = 0.5,
-        }
+        },
     },
     animation = {
         filename = "__base__/graphics/entity/radar/radar.png",
@@ -140,23 +142,23 @@ M.trainScheduler = util.proto.beacon {
     name = "train-scheduler",
     icon = "__base__/graphics/icons/beacon.png",
     icon_size = 32,
-    flags = { "not-rotatable", "placeable-player", "player-creation" },
-    minable = { mining_time = 0.2, result = "train-scheduler" },
+    flags = {"not-rotatable", "placeable-player", "player-creation"},
+    minable = {mining_time = 0.2, result = "train-scheduler"},
     max_health = 300,
     corpse = "medium-remnants",
     dying_explosion = "medium-explosion",
-    collision_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
-    selection_box = { { -2, -2 }, { 2, 2 } },
+    collision_box = {{-1.5, -1.5}, {1.5, 1.5}},
+    selection_box = {{-2, -2}, {2, 2}},
     tile_width = 4,
     tile_height = 4,
     selection_priority = 45,
     resistances = {
-        util.proto.fire { percent = 60 },
-        util.proto.impact { percent = 30 },
+        util.proto.fire {percent = 60},
+        util.proto.impact {percent = 30},
     },
-    vehicle_impact_sound =  {
+    vehicle_impact_sound = {
         filename = "__base__/sound/car-metal-impact.ogg",
-        volume = 0.65
+        volume = 0.65,
     },
     energy_source = util.proto.electric {
         usage_priority = "secondary-input",

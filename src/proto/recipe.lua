@@ -7,10 +7,10 @@ M.trainScanner = util.proto.recipe {
     energy_required = 5,
     enabled = false,
     ingredients = {
-        { "steel-plate", 10 },
-        { "iron-gear-wheel", 5 },
-        { "electronic-circuit", 5 },
-        { "stone-brick", 5 },
+        {"steel-plate", 10},
+        {"iron-gear-wheel", 5},
+        {"electronic-circuit", 5},
+        {"stone-brick", 5},
     },
     result = "train-scanner",
 }
@@ -20,10 +20,10 @@ M.trainScheduler = util.proto.recipe {
     energy_required = 5,
     enabled = false,
     ingredients = {
-        { "steel-plate", 5 },
-        { "copper-cable", 10 },
-        { "electronic-circuit", 10 },
-        { "stone-brick", 10 },
+        {"steel-plate", 5},
+        {"copper-cable", 10},
+        {"electronic-circuit", 10},
+        {"stone-brick", 10},
     },
     result = "train-scheduler",
 }

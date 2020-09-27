@@ -1,0 +1,6 @@
+align_args: false
+align_parameter: false
+align_table_field: false
+chop_down_table: true
+extra_sep_at_table_end: true
+break_after_operator: false

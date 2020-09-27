@@ -6,7 +6,7 @@ M.signalInput = util.proto.item {
     name = "signal-input",
     icon = "__core__/graphics/empty.png",
     icon_size = 1,
-    flags = { "hidden" },
+    flags = {"hidden"},
     place_result = "signal-input",
     stack_size = 1,
 }
@@ -15,7 +15,7 @@ M.signalOutput = util.proto.item {
     name = "signal-output",
     icon = "__core__/graphics/empty.png",
     icon_size = 1,
-    flags = { "hidden" },
+    flags = {"hidden"},
     place_result = "signal-output",
     stack_size = 1,
 }

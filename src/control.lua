@@ -8,7 +8,7 @@ local addTrainStop = function(stop)
         sid = #global.trainStations + 1
         global.trainStations[sid] = {
             name = name,
-            stops = { [stop.unit_number] = stop },
+            stops = {[stop.unit_number] = stop},
         }
         global.trainStationIds[name] = sid
     else
@@ -18,9 +18,7 @@ end
 
 local removeTrainStop = function(name, uid)
     local sid = global.trainStationIds[name]
-    if sid ~= nil then
-        global.trainStations[sid].stops[uid] = nil
-    end
+    if sid ~= nil then global.trainStations[sid].stops[uid] = nil end
 end
 
 local updateAll = function()
@@ -51,10 +49,8 @@ script.on_init(function()
             global.trains[train.id] = train
         end
 
-        local stops = surface.find_entities_filtered({ name = "train-stop" })
-        for i = 1, #stops do
-            addTrainStop(stops[i])
-        end
+        local stops = surface.find_entities_filtered({name = "train-stop"})
+        for i = 1, #stops do addTrainStop(stops[i]) end
     end
 end)
 
@@ -83,29 +79,22 @@ script.on_event({
     if entity.name == "train-scanner" then
         entity.operable = false
 
-        local input = util.attach(entity, "signal-input", { -0.5, 1 }, 4)
+        local input = util.attach(entity, "signal-input", {-0.5, 1}, 4)
         input.operable = false
 
-        local output = util.attach(entity, "signal-output", { 0.5, 1 }, 4)
+        local output = util.attach(entity, "signal-output", {0.5, 1}, 4)
         output.operable = false
 
-        global.trainScanners[entity.unit_number] = {
-            index = 1,
-            entity = entity,
-            input = input,
-            output = output,
-        }
+        global.trainScanners[entity.unit_number] =
+            {index = 1, entity = entity, input = input, output = output}
     elseif entity.name == "train-scheduler" then
         entity.operable = false
 
-        local input = util.attach(entity, "signal-input", { 0, 1 }, 4)
+        local input = util.attach(entity, "signal-input", {0, 1}, 4)
         input.operable = false
 
-        global.trainSchedulers[entity.unit_number] = {
-            id = 0,
-            entity = entity,
-            input = input,
-        }
+        global.trainSchedulers[entity.unit_number] =
+            {id = 0, entity = entity, input = input}
     elseif entity.name == "train-stop" then
         addTrainStop(entity)
     end
@@ -145,14 +134,10 @@ script.on_event("show-train-stations", function(event)
     if center["train-stations-frame"] == nil then
         local gui = center.add(util.proto.frame {
             name = "train-stations-frame",
-            caption = { "captions.train-stations" },
+            caption = {"captions.train-stations"},
             direction = "vertical",
-        }).add(util.proto.scrollPane {
-            name = "train-stations-scroll-pane",
-        }).add(util.proto.table {
-            name = "train-stations-table",
-            column_count = 2,
-        })
+        }).add(util.proto.scrollPane {name = "train-stations-scroll-pane"}).add(
+            util.proto.table {name = "train-stations-table", column_count = 2})
 
         for sid, station in pairs(global.trainStations) do
             local name = util.any(station.stops, function(_, stop)
@@ -178,7 +163,8 @@ script.on_nth_tick(settings.global["ats-update-interval"].value, updateAll)
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
     if event.setting == "ats-update-interval" then
         script.on_nth_tick(nil)
-        script.on_nth_tick(settings.global["ats-update-interval"].value, updateAll)
+        script.on_nth_tick(settings.global["ats-update-interval"].value,
+            updateAll)
     end
 end)
 
