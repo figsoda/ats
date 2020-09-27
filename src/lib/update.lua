@@ -68,15 +68,17 @@ M.trainScanner = function(uid, scanner)
     local backs = train.locomotives.back_movers
     if locomotive == -1 or locomotive == -3 then
         for i = 1, #fronts do
-            for name, count in pairs(fronts[i].get_fuel_inventory()
-                                         .get_contents()) do
+            for name, count in pairs(
+                fronts[i].get_fuel_inventory().get_contents()
+            ) do
                 addSignal(sigs, util.proto.item {name = name}, count)
             end
         end
 
         for i = 1, #backs do
-            for name, count in pairs(backs[i].get_fuel_inventory()
-                                         .get_contents()) do
+            for name, count in pairs(
+                backs[i].get_fuel_inventory().get_contents()
+            ) do
                 addSignal(sigs, util.proto.item {name = name}, count)
             end
         end
@@ -188,7 +190,8 @@ M.trainScheduler = function(uid, scheduler)
     local addStation = input.get_merged_signal(sigid.addStation)
     if addStation == -1 or addStation > 0 and addStation <= len + 1 then
         local station = global.trainStations[input.get_merged_signal(
-            sigid.trainStation)]
+            sigid.trainStation
+        )]
         if station ~= nil then
             local schedule = train.schedule or {current = 1, records = {}}
             local record = {station = station.name, wait_conditions = {}}

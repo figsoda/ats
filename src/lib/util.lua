@@ -69,16 +69,23 @@ M.merge = function(mx, my)
     return mz
 end
 
-M.proto = setmetatable({}, {
-    __index = function(_, key)
-        return function(mx)
-            return M.merge(mx, {
-                type = key:gsub("([A-Z])",
-                    function(x) return "-" .. x:lower() end),
-            })
-        end
-    end,
-})
+M.proto = setmetatable(
+    {}, {
+        __index = function(_, key)
+            return function(mx)
+                return M.merge(
+                    mx, {
+                        type = key:gsub(
+                            "([A-Z])", function(x)
+                                return "-" .. x:lower()
+                            end
+                        ),
+                    }
+                )
+            end
+        end,
+    }
+)
 
 M.destroyEntity = function(entity)
     if entity ~= nil and entity.valid then entity.destroy() end
@@ -92,7 +99,8 @@ M.reviveOrCreate = function(surface, opts)
             direction = opts.direction,
             force = opts.force,
             limit = 1,
-        })[1]
+        }
+                   )[1]
     if entity ~= nil then return entity end
 
     local ghost = surface.find_entities_filtered(
@@ -102,30 +110,38 @@ M.reviveOrCreate = function(surface, opts)
             direction = opts.direction,
             force = opts.force,
             limit = 1,
-        })[1]
+        }
+                  )[1]
     if ghost ~= nil then
         _, entity = ghost.silent_revive()
         if entity ~= nil then return entity end
     end
 
-    return surface.create_entity({
-        name = opts.name,
-        position = opts.position,
-        direction = opts.direction,
-        force = opts.force,
-    })
+    return surface.create_entity(
+        {
+            name = opts.name,
+            position = opts.position,
+            direction = opts.direction,
+            force = opts.force,
+        }
+    )
 end
 
 M.attach = function(entity, name, offset, rotation)
     offset.x = offset.x or offset[1] or 0
     offset.y = offset.y or offset[2] or 0
 
-    local att = M.reviveOrCreate(entity.surface, {
-        name = name,
-        position = {entity.position.x + offset.x, entity.position.y + offset.y},
-        direction = M.rotate(entity.direction, rotation),
-        force = entity.force,
-    })
+    local att = M.reviveOrCreate(
+        entity.surface, {
+            name = name,
+            position = {
+                entity.position.x + offset.x,
+                entity.position.y + offset.y,
+            },
+            direction = M.rotate(entity.direction, rotation),
+            force = entity.force,
+        }
+    )
     att.destructible = false
     att.rotatable = false
 

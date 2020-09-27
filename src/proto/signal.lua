@@ -121,8 +121,9 @@ M.currentStation = util.proto.virtualSignal {
 
 M.temporary = util.proto.virtualSignal {
     name = "signal-temporary",
-    icons = util.iconWithColor("yellow",
-        "__core__/graphics/time-editor-icon.png", 32, 0.75),
+    icons = util.iconWithColor(
+        "yellow", "__core__/graphics/time-editor-icon.png", 32, 0.75
+    ),
     subgroup = "virtual-signal-train-schedule",
     order = "g[train-schedule]-e[temporary]",
 }
@@ -136,16 +137,18 @@ M.compareType = util.proto.virtualSignal {
 
 M.timePassed = util.proto.virtualSignal {
     name = "signal-time-passed",
-    icons = util.iconWithColor("red", "__core__/graphics/clock-icon.png", 32,
-        0.75),
+    icons = util.iconWithColor(
+        "red", "__core__/graphics/clock-icon.png", 32, 0.75
+    ),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-b[time-passed]",
 }
 
 M.inactivity = util.proto.virtualSignal {
     name = "signal-inactivity",
-    icons = util.iconWithColor("red",
-        "__core__/graphics/multiplayer-waiting-icon.png", 32, 0.75),
+    icons = util.iconWithColor(
+        "red", "__core__/graphics/multiplayer-waiting-icon.png", 32, 0.75
+    ),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-c[inactivity]",
 }
@@ -159,16 +162,18 @@ M.cargo = util.proto.virtualSignal {
 
 M.circuitCondition = util.proto.virtualSignal {
     name = "signal-circuit-condition",
-    icons = util.iconWithColor("red",
-        "__base__/graphics/technology/circuit-network.png", 128, 0.1875),
+    icons = util.iconWithColor(
+        "red", "__base__/graphics/technology/circuit-network.png", 128, 0.1875
+    ),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-e[circuit-condition]",
 }
 
 M.passenger = util.proto.virtualSignal {
     name = "signal-passenger",
-    icons = util.iconWithColor("red", "__ats__/graphics/icons/passenger.png",
-        64, 0.5),
+    icons = util.iconWithColor(
+        "red", "__ats__/graphics/icons/passenger.png", 64, 0.5
+    ),
     subgroup = "virtual-signal-wait-condition",
     order = "h[wait-condition]-f[passenger]",
 }

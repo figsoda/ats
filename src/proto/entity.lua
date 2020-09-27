@@ -22,7 +22,8 @@ M.signalInput = util.merge(
         allow_copy_paste = false,
         item_slot_count = 0,
         circuit_wire_max_distance = 10,
-    })
+    }
+)
 M.signalInput.minable = nil
 
 M.signalOutput = util.merge(
@@ -45,7 +46,8 @@ M.signalOutput = util.merge(
         allow_copy_paste = false,
         item_slot_count = settings.startup["ats-signal-maximum"].value,
         circuit_wire_max_distance = 10,
-    })
+    }
+)
 M.signalOutput.minable = nil
 
 M.trainScanner = util.proto.beacon {
