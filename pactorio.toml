@@ -4,8 +4,8 @@ version = "0.3.0"
 title = "ATS - Automated Train Scheduling"
 author = "figsoda"
 homepage = "https://github.com/figsoda/ats"
-factorio_version = "1.0"
+factorio_version = "1.1"
 description = "Adds train scanners and train schedulers to schedule trains automaticly via circuit network. "
 
 [deps.required]
-base = ">= 1.0"
+base = ">= 1.1.0"
