@@ -28,7 +28,7 @@ M.trainScanner = function(uid, scanner)
     end
 
     local train
-    local sigs = {index = 0, params = {}}
+    local sigs = { index = 0, params = {} }
 
     local tid = input.get_merged_signal(sigid.train)
     if tid == -1 then
@@ -39,11 +39,15 @@ M.trainScanner = function(uid, scanner)
         end
 
         scanner.index = scanner.index + 1
-        if scanner.index > len then scanner.index = 1 end
+        if scanner.index > len then
+            scanner.index = 1
+        end
 
         tid = global.trainIds[scanner.index]
         train = global.trains[tid]
-        if train == nil then return end
+        if train == nil then
+            return
+        end
         if not train.valid then
             table.remove(global.trainIds, scanner.index)
             global.trains[tid] = nil
@@ -53,9 +57,13 @@ M.trainScanner = function(uid, scanner)
         addSignal(sigs, sigid.train, tid)
     elseif tid > 0 then
         train = global.trains[tid]
-        if train == nil then return end
+        if train == nil then
+            return
+        end
         if not train.valid then
-            util.filter(global.trainIds, function(x) return x ~= tid end)
+            util.filter(global.trainIds, function(x)
+                return x ~= tid
+            end)
             global.trains[tid] = nil
         end
     else
@@ -68,18 +76,14 @@ M.trainScanner = function(uid, scanner)
     local backs = train.locomotives.back_movers
     if locomotive == -1 or locomotive == -3 then
         for i = 1, #fronts do
-            for name, count in pairs(
-                fronts[i].get_fuel_inventory().get_contents()
-            ) do
-                addSignal(sigs, util.proto.item {name = name}, count)
+            for name, count in pairs(fronts[i].get_fuel_inventory().get_contents()) do
+                addSignal(sigs, util.proto.item({ name = name }), count)
             end
         end
 
         for i = 1, #backs do
-            for name, count in pairs(
-                backs[i].get_fuel_inventory().get_contents()
-            ) do
-                addSignal(sigs, util.proto.item {name = name}, count)
+            for name, count in pairs(backs[i].get_fuel_inventory().get_contents()) do
+                addSignal(sigs, util.proto.item({ name = name }), count)
             end
         end
     end
@@ -90,7 +94,7 @@ M.trainScanner = function(uid, scanner)
     local cargoWagon = input.get_merged_signal(sigid.cargoWagon)
     if cargoWagon == -1 or cargoWagon == -3 then
         for name, count in pairs(train.get_contents()) do
-            addSignal(sigs, util.proto.item {name = name}, count)
+            addSignal(sigs, util.proto.item({ name = name }), count)
         end
     end
     if cargoWagon == -2 or cargoWagon == -3 then
@@ -100,7 +104,7 @@ M.trainScanner = function(uid, scanner)
     local fluidWagon = input.get_merged_signal(sigid.fluidWagon)
     if fluidWagon == -1 or fluidWagon == -3 then
         for name, count in pairs(train.get_fluid_contents()) do
-            addSignal(sigs, util.proto.fluid {name = name}, count)
+            addSignal(sigs, util.proto.fluid({ name = name }), count)
         end
     end
     if fluidWagon == -2 or fluidWagon == -3 then
@@ -124,8 +128,10 @@ M.trainScanner = function(uid, scanner)
                         local sid = global.trainStationIds[record.station]
                         if sid ~= nil then
                             addSignal(sigs, sigid.trainStation, sid)
-                            if (temporary == -1 or temporary == -3)
-                                and record.temporary then
+                            if
+                                (temporary == -1 or temporary == -3)
+                                and record.temporary
+                            then
                                 addSignal(sigs, sigid.temporary, 1)
                             end
                         end
@@ -140,8 +146,10 @@ M.trainScanner = function(uid, scanner)
                     local sid = global.trainStationIds[record.station]
                     if sid ~= nil then
                         addSignal(sigs, sigid.currentStation, sid)
-                        if (temporary == -1 or temporary == -3)
-                            and record.temporary then
+                        if
+                            (temporary == -1 or temporary == -3)
+                            and record.temporary
+                        then
                             addSignal(sigs, sigid.temporary, 2)
                         end
                     end
@@ -150,7 +158,10 @@ M.trainScanner = function(uid, scanner)
                 local record = schedule.records[schedule.current]
                 if record ~= nil then
                     addSignal(sigs, sigid.currentStation, schedule.current)
-                    if (temporary == -2 or temporary == -3) and record.temporary then
+                    if
+                        (temporary == -2 or temporary == -3)
+                        and record.temporary
+                    then
                         addSignal(sigs, sigid.temporary, 2)
                     end
                 end
@@ -158,7 +169,7 @@ M.trainScanner = function(uid, scanner)
         end
     end
 
-    output.parameters = {parameters = sigs.params}
+    output.parameters = { parameters = sigs.params }
 end
 
 M.trainScheduler = function(uid, scheduler)
@@ -169,19 +180,29 @@ M.trainScheduler = function(uid, scheduler)
         return
     end
 
-    if scheduler.entity.energy < 12000 then return end
+    if scheduler.entity.energy < 12000 then
+        return
+    end
 
     local last = scheduler.id
     scheduler.id = input.get_merged_signal(sigid.id)
-    if last ~= 0 and last ~= scheduler.id then return end
+    if last ~= 0 and last ~= scheduler.id then
+        return
+    end
 
     local tid = input.get_merged_signal(sigid.train)
-    if tid <= 0 then return end
+    if tid <= 0 then
+        return
+    end
 
     local train = global.trains[tid]
-    if train == nil then return end
+    if train == nil then
+        return
+    end
     if not train.valid then
-        util.filter(global.trainIds, function(x) return x ~= tid end)
+        util.filter(global.trainIds, function(x)
+            return x ~= tid
+        end)
         global.trains[tid] = nil
     end
 
@@ -193,65 +214,65 @@ M.trainScheduler = function(uid, scheduler)
             sigid.trainStation
         )]
         if station ~= nil then
-            local schedule = train.schedule or {current = 1, records = {}}
-            local record = {station = station.name, wait_conditions = {}}
+            local schedule = train.schedule or { current = 1, records = {} }
+            local record = { station = station.name, wait_conditions = {} }
 
             if input.get_merged_signal(sigid.temporary) ~= 0 then
                 record.temporary = true
             end
 
             local i = 0
-            local cmp = input.get_merged_signal(sigid.compareType) < 0 and "and"
-                            or "or"
+            local cmp = input.get_merged_signal(sigid.compareType) < 0
+                    and "and"
+                or "or"
 
             local timePassed = input.get_merged_signal(sigid.timePassed)
             if timePassed > 0 then
                 i = i + 1
-                record.wait_conditions[i] =
-                    util.proto.time {compare_type = cmp, ticks = timePassed}
+                record.wait_conditions[i] = util.proto.time({
+                    compare_type = cmp,
+                    ticks = timePassed,
+                })
             end
 
             local inactivity = input.get_merged_signal(sigid.inactivity)
             if inactivity > 0 then
                 i = i + 1
-                record.wait_conditions[i] =
-                    util.proto.inactivity {
-                        compare_type = cmp,
-                        ticks = inactivity,
-                    }
+                record.wait_conditions[i] = util.proto.inactivity({
+                    compare_type = cmp,
+                    ticks = inactivity,
+                })
             end
 
             local cargo = input.get_merged_signal(sigid.cargo)
             if cargo ~= 0 then
                 i = i + 1
-                record.wait_conditions[i] {
+                record.wait_conditions[i]({
                     type = cargo < 0 and "empty" or "full",
                     compare_type = cmp,
-                }
+                })
             end
 
             if input.get_merged_signal(sigid.circuitCondition) ~= 0 then
                 i = i + 1
-                record.wait_conditions[i] =
-                    util.proto.circuit {
-                        compare_type = cmp,
-                        condition = {
-                            comparator = ">",
-                            first_signal = sigid.pass,
-                            constant = 0,
-                        },
-                    }
+                record.wait_conditions[i] = util.proto.circuit({
+                    compare_type = cmp,
+                    condition = {
+                        comparator = ">",
+                        first_signal = sigid.pass,
+                        constant = 0,
+                    },
+                })
             end
 
             local passenger = input.get_merged_signal(sigid.passenger)
             if passenger ~= 0 then
                 i = i + 1
-                record.wait_conditions[i] =
-                    {
-                        type = passenger < 0 and "passenger_not_present"
-                            or "passenger_present",
-                        compare_type = cmp,
-                    }
+                record.wait_conditions[i] = {
+                    type = passenger < 0 and "passenger_not_present"
+                        or "passenger_present",
+                    compare_type = cmp,
+                }
             end
 
             len = len + 1
@@ -264,7 +285,9 @@ M.trainScheduler = function(uid, scheduler)
                 end
             end
 
-            if schedule.current > len then schedule.current = len end
+            if schedule.current > len then
+                schedule.current = len
+            end
 
             train.schedule = schedule
         end
