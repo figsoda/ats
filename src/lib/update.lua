@@ -160,7 +160,7 @@ M.trainScanner = function(uid, scanner)
     end
   end
 
-  output.parameters = { parameters = sigs.params }
+  output.parameters = sigs.params
 end
 
 M.trainScheduler = function(uid, scheduler)
@@ -238,10 +238,10 @@ M.trainScheduler = function(uid, scheduler)
       local cargo = input.get_merged_signal(sigid.cargo)
       if cargo ~= 0 then
         i = i + 1
-        record.wait_conditions[i]({
+        record.wait_conditions[i] = {
           type = cargo < 0 and "empty" or "full",
           compare_type = cmp,
-        })
+        }
       end
 
       if input.get_merged_signal(sigid.circuitCondition) ~= 0 then
